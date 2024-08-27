@@ -1,0 +1,80 @@
+/* General body styling */
+body {
+  font-family: "Poppins", sans-serif;
+  background: linear-gradient(135deg, #0073e6, #00c6ff);
+  color: #333;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+/* Container styling */
+.container {
+  background: rgba(255, 255, 255, 0.9);
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+  max-width: 600px;
+  width: 100%;
+  text-align: center;
+}
+
+/* Header styling */
+h1 {
+  font-size: 2.5em;
+  margin-bottom: 20px;
+  color: #0073e6;
+  font-weight: 600;
+}
+
+/* Paragraph styling */
+p {
+  font-size: 1.1em;
+  margin-bottom: 25px;
+  color: #555;
+}
+
+/* List styling */
+.index-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+/* List item styling */
+.index-list li {
+  margin: 20px 0;
+}
+
+/* Link styling */
+.index-list a {
+  text-decoration: none;
+  color: #0073e6;
+  font-weight: 600;
+  font-size: 1.5em;
+  transition: all 0.3s ease;
+  border-bottom: 2px solid transparent;
+}
+
+/* Link hover effect */
+.index-list a:hover {
+  color: #005bb5;
+  border-bottom: 2px solid #0073e6;
+}
+
+/* Back link styling */
+.back-link {
+  display: inline-block;
+  margin-top: 20px;
+  text-decoration: none;
+  color: #0073e6;
+  font-weight: bold;
+  transition: color 0.3s;
+}
+
+.back-link:hover {
+  color: #005bb5;
+}
