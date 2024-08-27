@@ -4,13 +4,109 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Git Notes</title>
-    <link rel="stylesheet" href="../styles.css" />
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 20px;
+        line-height: 1.6;
+        max-width: 800px;
+      }
+      h1 {
+        color: #333;
+      }
+      h2 {
+        border-bottom: 2px solid #007bff;
+        color: #007bff;
+        padding-bottom: 5px;
+      }
+      p {
+        margin: 15px 0;
+      }
+      pre {
+        background-color: #f4f4f4;
+        padding: 10px;
+        border-radius: 5px;
+        overflow-x: auto;
+      }
+      code {
+        font-family: Consolas, "Courier New", monospace;
+        background-color: #f4f4f4;
+        padding: 2px 4px;
+        border-radius: 3px;
+      }
+      blockquote {
+        border-left: 5px solid #ccc;
+        padding-left: 10px;
+        margin: 20px 0;
+        color: #555;
+        font-style: italic;
+      }
+      .note {
+        background-color: #e7f3fe;
+        border-left: 5px solid #2196f3;
+        padding: 10px;
+        margin: 20px 0;
+      }
+      .image-container {
+        text-align: center;
+        margin: 20px 0;
+      }
+      .image-container img {
+        max-width: 100%;
+        height: auto;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+      }
+      .back-to-outline {
+        margin-top: 30px;
+        text-align: center;
+      }
+      a {
+        text-decoration: none;
+        color: #007bff;
+      }
+      a:hover {
+        text-decoration: underline;
+      }
+    </style>
   </head>
   <body>
     <div class="container">
       <h1>Git Notes</h1>
-      <p>Write your notes on Git here...</p>
-      <a href="../index.html" class="back-link">Back to Index</a>
+
+      <h2>1. What is Git?</h2>
+      <p>
+        Git is a distributed version control system that allows multiple people to work on a project at the same time without interfering with each other.
+      </p>
+
+      <h2>2. Basic Commands</h2>
+      <p>
+        Some essential Git commands include <code>git init</code>, <code>git clone</code>, <code>git add</code>, <code>git commit</code>, and <code>git push</code>.
+      </p>
+
+      <h3>2.1 Initialize a Repository</h3>
+      <pre><code>git init</code></pre>
+
+      <h3>2.2 Clone a Repository</h3>
+      <pre><code>git clone <repository-url></code></pre>
+
+      <h2>3. Branching and Merging</h2>
+      <p>
+        Branching allows you to work on different versions of a project simultaneously. You can create a new branch with <code>git branch <branch-name></code> and switch to it using <code>git checkout <branch-name></code>. To merge branches, use <code>git merge <branch-name></code>.
+      </p>
+
+      <blockquote>
+        "Git is the most powerful tool you will use in your development career."
+      </blockquote>
+
+      <div class="note">
+        <strong>Note:</strong>
+        Remember to frequently commit your changes to avoid losing work.
+      </div>
+
+      <div class="back-to-outline">
+        <p><a href="../index.html">Back to Index</a></p>
+      </div>
     </div>
   </body>
 </html>
