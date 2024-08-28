@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Introduction to CUDA</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        line-height: 1.6;
+        margin: 20px;
+        color: #333;
+      }
+      h1,
+      h2,
+      h3 {
+        color: #0056b3;
+      }
+      h2 {
+        border-bottom: 2px solid #0056b3;
+        padding-bottom: 5px;
+      }
+      p {
+        margin: 15px 0;
+      }
+      pre {
+        background-color: #f4f4f4;
+        padding: 10px;
+        border-radius: 5px;
+        overflow-x: auto;
+      }
+      code {
+        font-family: Consolas, "Courier New", monospace;
+        background-color: #f4f4f4;
+        padding: 2px 4px;
+        border-radius: 3px;
+      }
+      .back-to-outline {
+        margin-top: 30px;
+        text-align: center;
+      }
+      a {
+        text-decoration: none;
+        color: #0056b3;
+      }
+      a:hover {
+        text-decoration: underline;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Introduction to CUDA</h1>
+
+      <h2>1.1 What is CUDA?</h2>
+      <p>
+        CUDA (Compute Unified Device Architecture) is a parallel computing
+        platform and programming model developed by NVIDIA. It enables
+        developers to harness the power of NVIDIA GPUs to perform
+        general-purpose computing tasks more efficiently.
+      </p>
+
+      <h2 id="gpu-vs-cpu">1.2 GPU vs CPU</h2>
+      <p>
+        The key difference between a GPU (Graphics Processing Unit) and a CPU
+        (Central Processing Unit) lies in their design. A CPU consists of a few
+        cores optimized for sequential processing, whereas a GPU contains
+        thousands of smaller cores designed for parallel processing.
+      </p>
+      <div class="image-container">
+        <img src="https://via.placeholder.com/600x400" alt="GPU vs CPU" />
+        <p>Figure 1: GPU vs CPU Architecture</p>
+      </div>
+
+      <h2 id="cuda-architecture">1.3 CUDA Architecture</h2>
+      <p>
+        CUDA architecture is designed to be highly parallel, with each GPU
+        consisting of several Streaming Multiprocessors (SMs), each containing
+        numerous CUDA cores. These cores execute instructions concurrently,
+        making them ideal for tasks that can be parallelized.
+      </p>
+
+      <h2 id="install-cuda">1.4 Installing CUDA Toolkit</h2>
+      <p>
+        To start developing with CUDA, you need to install the CUDA Toolkit,
+        which includes:
+      </p>
+      <ul>
+        <li>CUDA Compiler (nvcc)</li>
+        <li>CUBLAS and CUFFT libraries</li>
+        <li>CUDA Samples</li>
+      </ul>
+      <p>To install the CUDA Toolkit, follow these steps:</p>
+      <pre><code># Example installation command for Ubuntu
+sudo apt update
+sudo apt install nvidia-cuda-toolkit
+        </code></pre>
+
+      <div class="back-to-outline">
+        <p><a href="cuda.html">Back to Outline</a></p>
+      </div>
+    </div>
+  </body>
+</html>
