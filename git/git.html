@@ -122,6 +122,27 @@
         Remember to frequently commit your changes to avoid losing work.
       </div>
       <h2>2. How to use the comamnd line in the vscode?</h2>
+      <p>Sometime when you upload file to remote repo, you will find some file is very large, now there is one methods to solve the problem</p>
+      <pre><code>git log <repository-url></code></pre>
+        <p> To see the commit history</p>
+        <pre><code>git reset --soft "commit-id"  <repository-url></code></pre>
+          <p>retrive the status of "commit-id", and then modify configfile </p>
+          <pre><code>To https://github.com/Min-star07/html.git
+              ! [rejected]        master -> master (fetch first)
+              error: failed to push some refs to 'https://github.com/Min-star07/html.git'
+              hint: Updates were rejected because the remote contains work that you do
+              hint: not have locally. This is usually caused by another repository pushing
+              hint: to the same ref. You may want to first integrate the remote changes
+              hint: (e.g., 'git pull ...') before pushing again.
+              hint: See the 'Note about fast-forwards' in 'git push --help' for details.<commit-id>  <repository-url></code></pre>
+          <p>The error message you’re seeing indicates that the remote repository has commits that your local repository does not have. Git is preventing you from pushing your changes because your local branch is behind the remote branch.
+            <pre><code>git fetch origin<repository-url></code></pre>
+              <p>This command retrieves the latest updates from the remote repository but does not merge them into your local branch.</p>
+            <pre><code>git rebase origin/master or  git merge origin/master<repository-url></code></pre>
+              <p>Merging vs. Rebasing: Merging creates a new commit that combines the changes, while rebasing rewrites the commit history to apply your changes on top of the fetched commits. Rebasing can make the history cleaner but may require more conflict resolution.</p>
+            <pre><code>git push origin master  <repository-url></code></pre>
+                  
+To resolve this issue, you need to synchronize your local branch with the remote branch before pushing. Here’s how you can do it:</p>
        <div class="container">
       <a href="../index.html" class="back-link">Back to Index</a>
     </div>
