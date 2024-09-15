@@ -143,6 +143,15 @@
             <pre><code>git push origin master  <repository-url></code></pre>
                   
 To resolve this issue, you need to synchronize your local branch with the remote branch before pushing. Here’s how you can do it:</p>
+<h2>2. How to first connect github</h2>
+<pre><code>
+  git init
+  git remote add origin  + github add
+  git add .
+  git commit -m "message"
+  git pull origin master --allow-unrelated-histories
+  git push origin master
+</code></pre>
        <div class="container">
       <a href="../index.html" class="back-link">Back to Index</a>
     </div>
