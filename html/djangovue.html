@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Note Template</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 20px;
+        line-height: 1.6;
+      }
+      h1,
+      h2,
+      h3 {
+        color: #333;
+      }
+      .note-section {
+        margin-bottom: 20px;
+      }
+      .highlight {
+        background-color: #f4f4f4;
+        border-left: 4px solid #ccc;
+        padding: 10px;
+        font-family: "Courier New", monospace;
+        white-space: normal;
+      }
+      ul {
+        list-style-type: disc;
+        padding-left: 20px;
+      }
+      li {
+        margin-bottom: 5px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>My Notes</h1>
+
+    <div class="note-section">
+      <h2>1. Introduction</h2>
+      <p>
+        Introduction the devlopment of Django and VUE, and then deploy by nginx
+        and uwsgi
+      </p>
+    </div>
+
+    <div class="note-section">
+      <h2>2. Create env</h2>
+      <p>
+        Here are some important concepts or ideas that need to be remembered:
+      </p>
+      <div class="highlight">
+        <code> <li>sudo apt-get update</li> </code>
+        <code><li>sudo apt-get install python3-venv</li> </code>
+        <code><li>mkdir env</li> </code>
+        <code><li>python3 -m venv ./env/env_name</li> </code>
+        <code><li>source ./env/dd/bin/activate</li></code>
+      </div>
+    </div>
+
+    <div class="note-section">
+      <h2>3. Create Django</h2>
+      <p>
+        Sometimes it's helpful to include code snippets to illustrate concepts:
+      </p>
+      <div class="highlight">
+        <code><li>pip install django djangorestframework</li> </code>
+        <code><li>pip install Django</li> </code>
+        <code><li>django-admin startproject backend</li></code>
+        <code><li>python manage.py startapp accounts</li></code>
+        <code
+          ><li>
+            modify seetting.py (time, database, shut off csrf, add rest_frame,
+            cores)
+          </li></code
+        >
+        <pre><code><li>DATABASES = {
+    "default": {
+        "ENGINE": "django.db.backends.mysql",
+        "NAME": "TT_inst_calibration",
+        "USER": "root",
+        "PASSWORD": "@Min08240707",
+        "HOST": "localhost",
+        "PORT": 3306,
+    }
+}</li></code></pre>
+        <pre><code><li>MIDDLEWARE = [
+    ...,
+    "corsheaders.middleware.CorsMiddleware",
+    "django.middleware.common.CommonMiddleware",
+    ...,
+]</li></code></pre>
+        <code><li>CORS_ALLOW_ALL_ORIGINS=True</li></code>
+
+        <code><li>python manage.py collectstatic</li></code>
+
+        <pre><code><li>
+  sudo apt-get update
+  sudo apt-get install python3-dev default-libmysqlclient-dev build-essential
+  pip install mysqlclient
+</li></code></pre>
+        <code><li>python manage.py startapp oaauth</li></code>
+        <!-- <code><li>########################################Create and modify User in django################################################</li></code>
+<pre><code><li>from django.db import models
+from django.contrib.auth.models import (
+    AbstractBaseUser,
+    PermissionsMixin,
+    BaseUserManager,
+)
+from django.contrib.auth.hashers import make_password
+from shortuuidfield import ShortUUIDField
+
+
+class OAUserManager(BaseUserManager):
+    use_in_migrations = True
+
+    def _create_user(self, username, email, password, **extra_fields):
+        """
+        Create and save a user with the given username, email, and password.
+        """
+        if not username:
+            raise ValueError("The given username must be set")
+        email = self.normalize_email(email)
+        user = self.model(username=username, email=email, **extra_fields)
+        user.password = make_password(password)
+        user.save(using=self._db)
+        return user
+
+    def create_user(self, username, email=None, password=None, **extra_fields):
+        extra_fields.setdefault("is_staff", True)
+        extra_fields.setdefault("is_superuser", False)
+        return self._create_user(username, email, password, **extra_fields)
+
+    def create_superuser(self, username, email=None, password=None, **extra_fields):
+        extra_fields.setdefault("is_staff", True)
+        extra_fields.setdefault("is_superuser", True)
+
+        if extra_fields.get("is_staff") is not True:
+            raise ValueError("Superuser must have is_staff=True.")
+        if extra_fields.get("is_superuser") is not True:
+            raise ValueError("Superuser must have is_superuser=True.")
+
+        return self._create_user(username, email, password, **extra_fields)
+
+
+class UserStatusChoices(models.IntegerChoices):
+    """
+    User status choices.
+    """
+
+    NORMAL = 0, "Normal"
+    LOCKED = 1, "Locked"
+    DELETED = 2, "Deleted"
+
+
+class OAUser(AbstractBaseUser, PermissionsMixin):
+    """
+    Custom user model.
+    """
+
+    uid = ShortUUIDField(primary_key=True)
+    username = models.CharField(max_length=150, unique=True)
+    email = models.EmailField(unique=True, blank=False)
+    telephone = models.CharField(max_length=20, blank=True)
+    is_staff = models.BooleanField(default=True)
+    is_active = models.BooleanField(default=True)
+    status = models.IntegerField(
+        choices=UserStatusChoices.choices, default=UserStatusChoices.NORMAL
+    )
+    date_joined = models.DateTimeField(auto_now_add=True)
+
+    objects = OAUserManager()
+
+    EMAIL_FIELD = "email"
+    USERNAME_FIELD = "email"
+    REQUIRED_FIELDS = ["username"]
+
+    class Meta:
+        db_table = "user"
+
+    def clean(self):
+        super().clean()
+        self.email = self.__class__.objects.normalize_email(self.email)
+
+    def get_full_name(self):
+        return self.username
+
+    def get_short_name(self):
+        return self.username
+</li></code></pre> -->
+        <code><li>pip install --upgrade PyJWT</li></code>
+        <pre><code>#apps.py
+from django.apps import AppConfig
+class OaauthConfig(AppConfig):
+    default_auto_field = "django.db.models.BigAutoField"
+    name = "apps.oaauth"</code></pre>
+        <pre><code>#__init__.py
+      import pymysql
+      pymysql.install_as_MySQLdb()
+ </code></pre>
+        <code><li>python manage.py makemigrations</li></code>
+        <code><li>pip install django-shortuuidfield</li></code>
+        <code><li>python manage.py migrate</li></code>
+      </div>
+
+      <p>prepare login page and serilize</p>
+      <p>prepare urls</p>
+      <div class="highlight">
+        <pre><code>#project url
+  from django.contrib import admin
+from django.urls import path, include
+
+urlpatterns = [
+    path("admin/", admin.site.urls),
+    path("auth/", include("apps.oaauth.urls")),
+]
+
+</code></pre>
+        <pre><code>#app url
+from django.urls import path
+from . import views
+app_name = "oaauth"
+urlpatterns = [
+    path("login", views.LoginView.as_view(), name="login"),
+    # path("resetpwd", views.ResetPwdView.as_view(), name="resetpwd"),
+    path("resetpwd", views.ResetPwdView.as_view(), name="resetpwd"),
+]
+</code></pre>
+      </div>
+
+      <p>Prepare postman to test</p>
+    </div>
+
+    <div class="note-section">
+      <h2>4. install uwsgi</h2>
+      <div class="highlight">
+        <code><li>pip install uwsgi</li> </code>
+      </div>
+      <ul>
+        To test uwsgi by creating a script
+      </ul>
+      <div class="highlight">
+        <code>
+          <li>#hello.py</li>
+          <li>def application(env, start_response):</li>
+          <li>start_response('200 OK', [('Content-Type', 'text/html')])</li>
+          <li>return [b"Hello, World! This is a test for uWSGI."]</li>
+        </code>
+      </div>
+      <div class="highlight">
+        uwsgi --http :8000 --wsgi-file hello.py
+        <code>
+          <li>#test by command line</li>
+          <li>uwsgi --http :8000 --wsgi-file hello.py</li>
+          <li>uwsgi --http :8000 --module backend.wsgi</li>
+          <li>sudo systemctl restart uwsgi</li>
+          <li>sudo uwsgi --ini uwsgi.ini</li>
+        </code>
+      </div>
+    </div>
+
+    <div class="note-section">
+      <h2>5. Nginx</h2>
+      <p>
+        Summarize the key takeaways from your notes. This section can be used
+        for a final reflection or any remaining thoughts.
+      </p>
+      <div class="highlight">
+        <code>
+          <li>sudo apt-get install nginx</li>
+          <li>#create nginx conf</li>
+          <li>vim /etc/nginx/sites-available/backend.conf</li>
+          <li>
+            sudo ln -s /etc/nginx/sites-available/backend.conf
+            /etc/nginx/sites-enabled/
+          </li>
+          <li>sudo nginx -t</li>
+          <li>sudo systemctl start/stop/restart nginx</li>
+        </code>
+      </div>
+    </div>
+
+    <div class="note-section">
+      <h2>5. VUE3</h2>
+      <p>
+        Summarize the key takeaways from your notes. This section can be used
+        for a final reflection or any remaining thoughts.
+      </p>
+      <div class="highlight">
+        <code>
+          <li>npm create vue@version</li>
+          <li>configuration(need vue-router, pinia, devTools)</li>
+          <li>cd project</li>
+          <li>npm install</li>
+        </code>
+      </div>
+      <p>Prepare App.vue</p>
+      <p>modify main.js</p>
+      <p>delete file under views</p>
+      <p>Add extend</p>
+      <code
+        ><li>
+          npm install vite-plugin-vue-setup-extend@0.4.0 --save-dev
+        </li></code
+      >
+      <code
+        ><li>
+          import VueSetupExtend from "vite-plugin-vue-setup-extend";
+        </li></code
+      >
+      <code><li>add VueSetupExtend() @vite.config.js</li></code>
+      <p>prepare router</p>
+      <code
+        ><li>import login from '@/views/login/login.vue' @router path</li></code
+      >
+      <div class="highlight">
+        <pre><code>import { createRouter, createWebHashHistory } from "vue-router";
+import login from "@/views/login/login.vue";
+ 
+const router = createRouter({
+  history: createWebHashHistory(import.meta.env.BASE_URL),
+  routes: [
+    {
+      path: "/",
+      name: "frame",
+      component: frame,
+    },
+    {
+      path: "/login",
+      name: "login",
+      component: login,
+    },
+  ],
+});
+
+export default router;
+</code></pre>
+      </div>
+      <code><li>npm install axios@1.6.8 --save</li></code>
+      <p>modify store/auth.js</p>
+    </div>
+
+    <div class="note-section">
+      <h2>5. Nginx</h2>
+      <p>
+        Summarize the key takeaways from your notes. This section can be used
+        for a final reflection or any remaining thoughts.
+      </p>
+      <div class="highlight">
+        <code>
+          <li>sudo apt-get install nginx</li>
+          <li>#create nginx conf</li>
+          <li>vim /etc/nginx/sites-available/backend.conf</li>
+          <li>
+            sudo ln -s /etc/nginx/sites-available/backend.conf
+            /etc/nginx/sites-enabled/
+          </li>
+          <li>sudo nginx -t</li>
+          <li>sudo systemctl start/stop/restart nginx</li>
+        </code>
+      </div>
+    </div>
+
+    <div class="note-section">
+      <h2>5. Deploy</h2>
+      <p>
+        Summarize the key takeaways from your notes. This section can be used
+        for a final reflection or any remaining thoughts.
+      </p>
+      <code><li>pip install django-environ</li></code>
+    </div>
+  </body>
+</html>
