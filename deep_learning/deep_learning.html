@@ -14,6 +14,7 @@
         display: flex; /* Main container to hold sidebar and content */
         height: 100vh; /* Full height of the viewport */
         overflow: hidden; /* Prevents body scroll */
+        background-color: #f8f9fa; /* Background color */
       }
 
       .sidebar {
@@ -21,17 +22,17 @@
         max-width: 400px;
         width: 300px; /* Default sidebar width */
         padding: 20px;
-        background-color: #f8f9fa;
+        background-color: #fff; /* White background for sidebar */
         border-right: 1px solid #ddd;
         overflow-y: auto; /* Allows scrolling within the sidebar */
         resize: horizontal; /* Allows resizing of the sidebar */
-        overflow: auto; /* Ensures the resize handle appears */
       }
 
       .content {
         flex: 1; /* Makes the content take up the remaining space */
         padding: 20px;
         overflow-y: auto;
+        background-color: #fff; /* White background for content area */
       }
 
       h1,
@@ -78,18 +79,22 @@
       <h2>1. Introduction to DL</h2>
       <ul>
         <li>
-          <a onclick="loadContent('intro.html')">1.1 What is Deep Learning</a>
+          <a href="#" onclick="loadContent(event, 'intro.html')"
+            >1.1 What is Deep Learning</a
+          >
         </li>
         <li>
-          <a onclick="loadContent('intro.html#Pytorch')">1.2 What is PyTorch</a>
+          <a href="#" onclick="loadContent(event, 'intro.html#Pytorch')"
+            >1.2 What is PyTorch</a
+          >
         </li>
         <li>
-          <a onclick="loadContent('intro.html#installation')"
+          <a href="#" onclick="loadContent(event, 'intro.html#installation')"
             >1.3 PyTorch Installation</a
           >
         </li>
         <li>
-          <a onclick="loadContent('intro.html#ibasic info')"
+          <a href="#" onclick="loadContent(event, 'intro.html#basic-info')"
             >1.4 Basic Information (Numpy, Tensor, and Class)</a
           >
         </li>
@@ -98,22 +103,30 @@
       <h2>2. Basic Information</h2>
       <ul>
         <li>
-          <a onclick="loadContent('programming_model.html#gradient')"
+          <a
+            href="#"
+            onclick="loadContent(event, 'programming_model.html#gradient')"
             >2.1 Gradient Descent Algorithm</a
           >
         </li>
         <li>
-          <a onclick="loadContent('programming_model.html#loss')"
+          <a
+            href="#"
+            onclick="loadContent(event, 'programming_model.html#loss')"
             >2.2 Loss Function</a
           >
         </li>
         <li>
-          <a onclick="loadContent('programming_model.html#optimizer')"
+          <a
+            href="#"
+            onclick="loadContent(event, 'programming_model.html#optimizer')"
             >2.3 Optimization</a
           >
         </li>
         <li>
-          <a onclick="loadContent('programming_model.html#Framework')"
+          <a
+            href="#"
+            onclick="loadContent(event, 'programming_model.html#framework')"
             >2.4 Basic Framework</a
           >
         </li>
@@ -122,20 +135,28 @@
       <h2>3. Linear Model</h2>
       <ul>
         <li>
-          <a onclick="loadContent('linear_model.html#example')">3.1 Example</a>
+          <a href="#" onclick="loadContent(event, 'linear_model.html#example')"
+            >3.1 Example</a
+          >
         </li>
         <li>
-          <a onclick="loadContent('bostob_house_price.html#example')"
+          <a
+            href="#"
+            onclick="loadContent(event, 'bostob_house_price.html#example')"
             >3.2 波士顿房屋价格预测</a
           >
         </li>
         <li>
-          <a onclick="loadContent('California_Housing_Dataset.html#example')"
+          <a
+            href="#"
+            onclick="loadContent(event, 'California_Housing_Dataset.html#example')"
             >3.3 预测区域房屋的中位数价格</a
           >
         </li>
         <li>
-          <a onclick="loadContent('Diabetes_Dataset.html#example')"
+          <a
+            href="#"
+            onclick="loadContent(event, 'Diabetes_Dataset.html#example')"
             >3.4 预测糖尿病病情进展的量化指标</a
           >
         </li>
@@ -145,17 +166,22 @@
       <ul>
         <li>
           <a
-            onclick="loadContent('Breast_Cancer_Wisconsin_Dataset.html#example')"
+            href="#"
+            onclick="loadContent(event, 'Breast_Cancer_Wisconsin_Dataset.html#example')"
             >4.1 二分类（良性或恶性）</a
           >
         </li>
         <li>
-          <a onclick="loadContent('Pima_Indians_Diabetes_Dataset.html#example')"
+          <a
+            href="#"
+            onclick="loadContent(event, 'Pima_Indians_Diabetes_Dataset.html#example')"
             >4.2 二分类（是否患有糖尿病）</a
           >
         </li>
         <li>
-          <a onclick="loadContent('Titanic_Dataset.html#example')"
+          <a
+            href="#"
+            onclick="loadContent(event, 'Titanic_Dataset.html#example')"
             >4.3 二分类（幸存或死亡）</a
           >
         </li>
@@ -164,28 +190,34 @@
       <h2>5. Multi-classification</h2>
       <ul>
         <li>
-          <a onclick="loadContent('Iris_Dataset.html#example')"
+          <a href="#" onclick="loadContent(event, 'Iris_Dataset.html#example')"
             >5.1 多分类（Setosa, Versicolor, Virginica）</a
           >
         </li>
         <li>
-          <a onclick="loadContent('Wine_Dataset.html#example')"
+          <a href="#" onclick="loadContent(event, 'Wine_Dataset.html#example')"
             >5.2 多分类（葡萄酒类别1, 2, 3）</a
           >
         </li>
         <li>
-          <a onclick="loadContent('MNIST_Dataset.html#example')"
+          <a href="#" onclick="loadContent(event, 'MNIST_Dataset.html#example')"
             >5.3 多分类（数字0-9）</a
           >
         </li>
       </ul>
 
-      <h2>6. Recurrent Neural Networks</h2>
+      <h2>6. Neural Networks Model</h2>
+      <ul>
+        <li>
+          <a href="#" onclick="loadContent(event, 'Resnet.html#resnet')"
+            >6.1 RESNET</a
+          >
+        </li>
+      </ul>
 
       <a href="../index.html" class="back-link">Back to Index</a>
     </div>
 
-    <!-- Content Area -->
     <!-- Content Area -->
     <div class="content" id="content-area">
       <h2>Content Area</h2>
@@ -197,23 +229,27 @@
         Click on the links in the sidebar to view different sections of the
         learning outline.
       </p>
-
-      <!-- Embedding Jupyter Notebook as an iframe -->
-      <iframe
-        src="https://github.com/Min-star07/ML/blob/master/lesson9/p1ch2_pretrained_networks.ipynb"
-        width="100%"
-        height="600px"
-      ></iframe>
     </div>
 
     <script>
-      function loadContent(url) {
+      function loadContent(event, url) {
+        event.preventDefault(); // Prevent the default link behavior
+
+        // Clear the content area temporarily if needed, but do not reset to default
+        // Optionally: document.getElementById("content-area").innerHTML = "<p>Loading...</p>";
+
         fetch(url)
-          .then((response) => response.text())
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error("Network response was not ok");
+            }
+            return response.text();
+          })
           .then((data) => {
-            document.getElementById("content-area").innerHTML = data;
+            document.getElementById("content-area").innerHTML = data; // Load new content
           })
           .catch((error) => {
+            // Handle the error gracefully without reverting to the default content
             document.getElementById("content-area").innerHTML =
               "<p>Error loading content. Please try again.</p>";
             console.error("Error loading content:", error);

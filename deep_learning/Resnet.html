@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CSS Inclusion Example</title>
+
+    <!-- External CSS -->
+    <style>
+         <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 20px;
+        line-height: 1.6;
+        max-width: 800px;
+      }
+      h1 {
+        color: #333;
+      }
+      h2 {
+        border-bottom: 2px solid #007bff;
+        color: #007bff;
+        padding-bottom: 5px;
+      }
+      p {
+        margin: 15px 0;
+      }
+      pre {
+        background-color: #f4f4f4;
+        padding: 10px;
+        border-radius: 5px;
+        overflow-x: auto;
+      }
+      code {
+        font-family: Consolas, "Courier New", monospace;
+        background-color: #f4f4f4;
+        padding: 2px 4px;
+        border-radius: 3px;
+      }
+      blockquote {
+        border-left: 5px solid #ccc;
+        padding-left: 10px;
+        margin: 20px 0;
+        color: #050505;
+        font-style: italic;
+      }
+      .note {
+        background-color: #e7f3fe;
+        border-left: 5px solid #2196f3;
+        padding: 10px;
+        margin: 20px 0;
+      }
+      .image-container {
+        text-align: center;
+        margin: 20px 0;
+      }
+      .image-container img {
+        max-width: 100%;
+        height: auto;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+      }
+      .back-to-outline {
+        margin-top: 30px;
+        text-align: center;
+      }
+      a {
+        text-decoration: none;
+        color: #007bff;
+      }
+      a:hover {
+        text-decoration: underline;
+      }
+    </style>
+    </style>>
+  </head>
+  <body>
+    <!-- Header Section -->
+    <div class="header">
+      <h2>The Introduction of ResNet</h2>
+    </div>
+
+
+    <!-- Content Section -->
+    <div class="content">
+      <h3>A pretrained network that recognizes the subject of an image</h3>
+    <pre><code>from torchvision import 
+ models dir(models) #To show the pretrained model of pytorch 
+    </code></pre>
+    <pre><code>alexnet = models.AlexNet()
+resnet = models.resnet101(pretrained=True)
+resnet</code></pre>
+<p>Use the resnet to recognize image, the number 101 is the layer numbers, pretrained=True that means when you loads model, the weights is also downloaded from training on a larger dataset</p>
+<pre><code>from torchvision import transforms
+
+preprocess = transforms.Compose(
+    [
+        transforms.Resize(256),
+        transforms.CenterCrop(224),
+        transforms.ToTensor(),
+        transforms.Normalize(mean=[0.485, 0.456, 0.406], std=(0.229, 0.224, 0.225)),
+    ]
+)
+
+</code></pre> 
+<p>Compose is a series of opearations that make input meet the requirements of model, such as Resize, CenterCrop, ToTensor and Normolize</p> 
+<pre><code>from PIL import Image
+
+img = Image.open("../pytorch_dlwpt-code-master/data/p1ch2/bobby.jpg")
+# Display the image properties
+print(f"Format: {img.format}")  # Image format (e.g., JPEG, PNG)
+print(f"Size: {img.size}")  # Image size (width, height)
+print(f"Mode: {img.mode}")  # Image mode (e.g., RGB, L, RGBA)
+print(f"Color Palette: {img.palette}")  # Color palette, if applicable
+print(f"Info: {img.info}")
+
+out :
+Format: JPEG
+Size: (1280, 720)
+Mode: RGB
+Color Palette: None
+Info: {'jfif': 257, 'jfif_version': (1, 1), 'jfif_unit': 0, 'jfif_density': (1, 1)}
+
+#trasforms into Tensor
+img_t = preprocess(img)
+# Display the tensor properties
+print(f"Shape: {img_t.shape}")  # Shape of the tensor (channels, height, width)
+print(f"Dtype: {img_t.dtype}")  # Data type of the tensor elements
+print(f"Device: {img_t.device}")  # Device where the tensor is stored (e.g., CPU, GPU)
+print(f"Min value: {img_t.min().item()}")  # Minimum value in the tensor
+print(f"Max value: {img_t.max().item()}")  # Maximum value in the tensor
+print(f"Mean value: {img_t.mean().item()}")  # Mean value of the tensor
+print(img_t)
+
+out :
+Shape: torch.Size([3, 224, 224])
+Dtype: torch.float32
+Device: cpu
+Min value: -2.0836544036865234
+Max value: 2.204270362854004
+Mean value: 0.30250686407089233
+tensor([[[-0.6281, -0.6623, -0.6794,  ...,  0.0056, -0.0287, -0.0629],
+         [-0.7137, -0.7137, -0.7137,  ...,  0.0398,  0.0227,  0.0056],
+         [-0.7137, -0.7137, -0.7137,  ...,  0.0398,  0.0569,  0.0569],
+         ...,
+         [ 1.4440,  1.4269,  1.4783,  ...,  0.6049,  0.6221,  0.6906],
+         [ 1.4269,  1.4440,  1.4783,  ...,  0.6906,  0.6734,  0.7077],
+         [ 1.4612,  1.4783,  1.5125,  ...,  0.6906,  0.7248,  0.7419]],
+
+        [[-1.2829, -1.2829, -1.2829,  ..., -0.6352, -0.6702, -0.7052],
+         [-1.2654, -1.2479, -1.2654,  ..., -0.6176, -0.6527, -0.7052],
+         [-1.2479, -1.2479, -1.2654,  ..., -0.6176, -0.6001, -0.6527],
+         ...,
+         [ 0.7829,  0.8004,  0.8704,  ..., -0.3025, -0.2675, -0.2150],
+         [ 0.7654,  0.8354,  0.9055,  ..., -0.2150, -0.2150, -0.1625],
+         [ 0.8004,  0.8529,  0.9230,  ..., -0.1800, -0.1275, -0.0749]],
+
+        [[-1.4907, -1.4559, -1.4210,  ..., -1.0376, -1.0898, -1.1421],
+         [-1.5081, -1.4559, -1.4210,  ..., -1.0376, -1.0898, -1.1421],
+         [-1.4907, -1.4733, -1.4559,  ..., -1.0376, -1.0550, -1.1073],
+         ...,
+         [-0.5321, -0.5147, -0.4624,  ..., -1.3687, -1.2816, -1.1596],
+         [-0.5321, -0.4798, -0.4275,  ..., -1.2816, -1.2293, -1.1073],
+         [-0.4798, -0.4101, -0.3578,  ..., -1.2467, -1.1421, -1.0550]]])
+
+
+</code></pre>
+<p>The style of PIL to read picture and see the perperties </p>
+</div>
+  </body>
+</html>
