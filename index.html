@@ -4,10 +4,9 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Learning Outline</title>
-        <!-- External CSS (Recommended for large projects) -->
-    <link rel="stylesheet" href="style.css" />
-    <!-- Link to an external CSS file -->
-    <!-- <style>
+
+    <style>
+      /* General body styling */
       body {
         font-family: Arial, sans-serif;
         line-height: 1.6;
@@ -19,6 +18,7 @@
         overflow: hidden; /* Prevents body scroll */
       }
 
+      /* Sidebar styling */
       .sidebar {
         min-width: 200px;
         max-width: 400px;
@@ -28,15 +28,16 @@
         border-right: 1px solid #ddd;
         overflow-y: auto; /* Allows scrolling within the sidebar */
         resize: horizontal; /* Allows resizing of the sidebar */
-        overflow: auto; /* Ensures the resize handle appears */
       }
 
+      /* Content area styling */
       .content {
         flex: 1; /* Makes the content take up the remaining space */
         padding: 20px;
         overflow-y: auto;
       }
 
+      /* Headings styling */
       h1,
       h2,
       h3 {
@@ -49,34 +50,37 @@
         margin-top: 20px;
       }
 
+      /* List styling */
       ul {
         list-style-type: none;
-        padding-left: 0;
+        padding-left: 0; /* Remove default padding */
       }
 
       li {
-        margin-bottom: 10px;
+        margin-bottom: 10px; /* Space between list items */
       }
 
+      /* Link styling */
       a {
-        color: #0056b3;
-        text-decoration: none;
-        cursor: pointer;
+        color: #0056b3; /* Link color */
+        text-decoration: none; /* Remove underline from links */
+        cursor: pointer; /* Pointer cursor for links */
       }
 
       a:hover {
-        text-decoration: underline;
+        text-decoration: underline; /* Underline links on hover */
       }
 
+      /* Back link styling */
       .back-link {
         display: block;
-        margin-top: 20px;
+        margin-top: 20px; /* Space above the back link */
       }
     </style>
-  </head> -->
+  </head>
 
   <body>
-    <div class="container">
+    <div class="sidebar">
       <h2>Learning Notes</h2>
       <ul class="index-list">
         <li><a href="git/git.html">Git</a></li>
@@ -84,10 +88,13 @@
         <li><a href="deep_learning/deep_learning.html">Deep Learning</a></li>
         <li><a href="algorithms/algorithms.html">Algorithms</a></li>
         <li><a href="html/djangovue.html">Django_Vue Deploy</a></li>
-        <li><a href="tool/tool.html">tool</a></li>
+        <li><a href="tool/tool.html">Tool</a></li>
       </ul>
-      
-      
+    </div>
+
+    <div class="content">
+      <h3>Welcome to the Learning Outline!</h3>
+      <p>Select a topic from the sidebar to explore more.</p>
     </div>
   </body>
 </html>
