@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Simple Translation Tool</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 20px;
+        text-align: center;
+      }
+      input,
+      select,
+      button {
+        margin: 10px;
+        padding: 10px;
+        font-size: 16px;
+      }
+      #result {
+        margin-top: 20px;
+        font-size: 18px;
+        color: green;
+      }
+    </style>
+  </head>
+  <body>
+    <h2>Translation Tool</h2>
+
+    <!-- Input text to translate -->
+    <textarea
+      id="inputText"
+      rows="5"
+      cols="50"
+      placeholder="Enter text to translate"
+    ></textarea
+    ><br />
+
+    <!-- Select target language -->
+    <label for="language">Translate to:</label>
+    <select id="language">
+      <option value="zh">Chinese</option>
+      <option value="es">Spanish</option>
+      <option value="fr">French</option>
+      <option value="de">German</option>
+      <option value="ja">Japanese</option>
+      <!-- Add more languages as needed --></select
+    ><br />
+
+    <!-- Translate button -->
+    <button onclick="translateText()">Translate</button>
+
+    <!-- Output translated text -->
+    <div id="result"></div>
+
+    <script>
+      // Function to perform translation
+      async function translateText() {
+        const text = document.getElementById("inputText").value;
+        const targetLang = document.getElementById("language").value;
+
+        if (!text) {
+          alert("Please enter text to translate.");
+          return;
+        }
+
+        // Fetch translation using a simple API example (replace with a real translation API endpoint if needed)
+        const response = await fetch(
+          `https://api.mymemory.translated.net/get?q=${encodeURIComponent(
+            text
+          )}&langpair=en|${targetLang}`
+        );
+        const data = await response.json();
+
+        // Display translated text
+        document.getElementById("result").innerText =
+          data.responseData.translatedText;
+      }
+    </script>
+  </body>
+</html>
