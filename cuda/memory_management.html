@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CUDA Memory Management Summary</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+        }
+        h1, h2 {
+            color: #0056b3;
+        }
+        .method {
+            font-weight: bold;
+            color: #333;
+        }
+        code {
+            background-color: #f4f4f4;
+            padding: 2px 4px;
+            border-radius: 4px;
+            color: #d63384;
+        }
+        pre {
+            background-color: #f4f4f4;
+            padding: 10px;
+            border-radius: 4px;
+            overflow: auto;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>CUDA Memory Management Methods</h1>
+
+    <p>In CUDA, memory management involves allocating, initializing, copying, and freeing memory between the CPU (host) and GPU (device). Below are the core methods for managing memory in CUDA:</p>
+
+    <h2>1. <span class="method">cudaMalloc</span></h2>
+    <p><code>cudaMalloc</code> allocates memory on the GPU (device). This is the first step to store data on the device before performing computations.</p>
+    <pre><code>cudaError_t cudaMalloc(void **devPtr, size_t size);</code></pre>
+    <p><strong>Parameters:</strong></p>
+    <ul>
+        <li><strong>devPtr</strong>: Pointer to the allocated memory on the device.</li>
+        <li><strong>size</strong>: The size of the allocated memory (in bytes).</li>
+    </ul>
+
+    <h2>2. <span class="method">cudaMemset</span></h2>
+    <p><code>cudaMemset</code> initializes or sets memory on the device to a specific value. It is typically used to initialize device memory to zero or another byte-level value.</p>
+    <pre><code>cudaError_t cudaMemset(void *devPtr, int value, size_t count);</code></pre>
+    <p><strong>Parameters:</strong></p>
+    <ul>
+        <li><strong>devPtr</strong>: Pointer to the device memory.</li>
+        <li><strong>value</strong>: The value to set in memory (usually 0).</li>
+        <li><strong>count</strong>: Number of bytes to set.</li>
+    </ul>
+
+    <h2>3. <span class="method">cudaMemcpy</span></h2>
+    <p><code>cudaMemcpy</code> copies data between the host (CPU) and device (GPU). It can also be used for copying data between different memory regions within the GPU.</p>
+    <pre><code>cudaError_t cudaMemcpy(void *dst, const void *src, size_t count, cudaMemcpyKind kind);</code></pre>
+    <p><strong>Parameters:</strong></p>
+    <ul>
+        <li><strong>dst</strong>: Destination pointer (host or device).</li>
+        <li><strong>src</strong>: Source pointer (host or device).</li>
+        <li><strong>count</strong>: Number of bytes to copy.</li>
+        <li><strong>kind</strong>: The direction of the copy:
+            <ul>
+                <li><code>cudaMemcpyHostToDevice</code></li>
+                <li><code>cudaMemcpyDeviceToHost</code></li>
+                <li><code>cudaMemcpyDeviceToDevice</code></li>
+                <li><code>cudaMemcpyHostToHost</code></li>
+            </ul>
+        </li>
+    </ul>
+
+    <h2>4. <span class="method">cudaFree</span></h2>
+    <p><code>cudaFree</code> releases or deallocates memory previously allocated on the GPU with <code>cudaMalloc</code>.</p>
+    <pre><code>cudaError_t cudaFree(void *devPtr);</code></pre>
+    <p><strong>Parameters:</strong></p>
+    <ul>
+        <li><strong>devPtr</strong>: Pointer to the memory to be freed on the device.</li>
+    </ul>
+
+    <h2>5. <span class="method">cudaMallocManaged</span></h2>
+    <p><code>cudaMallocManaged</code> allocates <em>unified memory</em> that can be accessed by both the host and device without explicit copying. This simplifies memory management, as data can be transparently transferred between CPU and GPU.</p>
+    <pre><code>cudaError_t cudaMallocManaged(void **devPtr, size_t size);</code></pre>
+    <p><strong>Parameters:</strong></p>
+    <ul>
+        <li><strong>devPtr</strong>: Pointer to the allocated unified memory.</li>
+        <li><strong>size</strong>: The size of the allocated memory.</li>
+    </ul>
+
+    <h2>6. <span class="method">cudaMemPrefetchAsync</span></h2>
+    <p><code>cudaMemPrefetchAsync</code> prefetches memory to a specified device asynchronously. It's used for managing the placement of managed memory, ensuring that the data is available on the desired device (CPU or GPU).</p>
+    <pre><code>cudaError_t cudaMemPrefetchAsync(void *devPtr, size_t count, int device, cudaStream_t stream);</code></pre>
+    <p><strong>Parameters:</strong></p>
+    <ul>
+        <li><strong>devPtr</strong>: Pointer to the managed memory.</li>
+        <li><strong>count</strong>: Number of bytes to prefetch.</li>
+        <li><strong>device</strong>: The device to prefetch to (0 for host, device ID for GPU).</li>
+        <li><strong>stream</strong>: The CUDA stream for asynchronous execution (can be 0 for default stream).</li>
+    </ul>
+
+    <h2>7. <span class="method">cudaDeviceSynchronize</span></h2>
+    <p><code>cudaDeviceSynchronize</code> waits for the device to complete all preceding tasks. This is commonly used after launching kernels or memory operations to ensure that the device is idle before proceeding.</p>
+    <pre><code>cudaError_t cudaDeviceSynchronize(void);</code></pre>
+<h2>EXAMPLE</h2>
+    <pre><code>
+#include <cstdio>
+#include <cuda_runtime.h>
+
+// CUDA kernel for vector addition
+__global__ void vectorAdd(int *a, int *b, int *c, int N) {
+    int idx = threadIdx.x + blockIdx.x * blockDim.x;
+    if (idx < N) {
+        c[idx] = a[idx] + b[idx];
+    }
+}
+
+int main() {
+    int N = 100;
+    size_t size = N * sizeof(int);
+
+    // Host memory allocation
+    int h_a[N], h_b[N], h_c[N];
+    //h_a = (int*)malloc(size);
+
+    // Initialize host arrays with values
+    for (int i = 0; i < N; ++i) {
+        h_a[i] = i;
+        h_b[i] = i * 2;
+    }
+
+    // Device memory pointers
+    int *d_a, *d_b, *d_c;
+
+    // Step 1: Allocate device memory
+    cudaMalloc(&d_a, size);
+    cudaMalloc(&d_b, size);
+    cudaMalloc(&d_c, size);
+
+    // Step 2: Copy data from host to device
+    cudaMemcpy(d_a, h_a, size, cudaMemcpyHostToDevice);
+    cudaMemcpy(d_b, h_b, size, cudaMemcpyHostToDevice);
+
+    // Step 3: Launch kernel for vector addition
+    int blockSize = 256;
+    int numBlocks = (N + blockSize - 1) / blockSize;  // To ensure N elements are processed
+    vectorAdd<<<numBlocks, blockSize>>>(d_a, d_b, d_c, N);
+
+    // Step 4: Copy the result from device to host
+    cudaMemcpy(h_c, d_c, size, cudaMemcpyDeviceToHost);
+
+    // Print results
+    for (int i = 0; i < N; ++i) {
+        printf("%d + %d = %d\n", h_a[i], h_b[i], h_c[i]);
+    }
+
+    // Step 5: Free device memory
+    cudaFree(d_a);
+    cudaFree(d_b);
+    cudaFree(d_c);
+
+    return 0;
+}
+
+    </code></pre>
+    <pre><code>
+#include <cstdio>
+#include <cuda_runtime.h>
+
+// CUDA error checking macro
+#define cudaCheckErrors(msg) \
+    do { \
+        cudaError_t __err = cudaGetLastError(); \
+        if (__err != cudaSuccess) { \
+            fprintf(stderr, "Fatal error: %s (%s at %s:%d)\n", \
+                msg, cudaGetErrorString(__err), \
+                __FILE__, __LINE__); \
+            exit(1); \
+        } \
+    } while (0)
+
+// CUDA kernel for vector addition
+__global__ void vectorAdd(int *a, int *b, int *c, int N) {
+    int idx = threadIdx.x + blockIdx.x * blockDim.x;
+    if (idx < N) {
+        c[idx] = a[idx] + b[idx];
+    }
+}
+
+int main() {
+    int N = 100;
+    size_t size = N * sizeof(int);
+
+    // Unified memory allocation
+    int *a, *b, *c;
+    cudaMallocManaged(&a, size);
+    cudaMallocManaged(&b, size);
+    cudaMallocManaged(&c, size);
+    cudaCheckErrors("cudaMallocManaged failed");
+
+    // Initialize arrays with values
+    for (int i = 0; i < N; ++i) {
+        a[i] = i;
+        b[i] = i * 2;
+    }
+
+    // Prefetch data to the GPU (device 0)
+    cudaMemPrefetchAsync(a, size, 0);
+    cudaMemPrefetchAsync(b, size, 0);
+    cudaMemPrefetchAsync(c, size, 0);
+    // cudaError_t cudaMemPrefetchAsync(void *devPtr, size_t count, int dstDevice, cudaStream_t stream = 0);
+    /*
+    devPtr: A pointer to the memory you want to prefetch. This memory must have been allocated using cudaMallocManaged.
+    count: The size (in bytes) of the memory to prefetch.
+    dstDevice: The device you want to prefetch the memory to. This can be:
+            A GPU device ID (like 0, 1, etc.) to prefetch memory to that particular GPU.
+            cudaCpuDeviceId to prefetch the memory to the CPU (host).
+    stream: (Optional) A CUDA stream for asynchronous execution. If set to 0, the default stream is used.
+    */ 
+    cudaCheckErrors("cudaMemPrefetchAsync to GPU failed");
+
+    // Launch kernel for vector addition
+    int blockSize = 256;
+    int numBlocks = (N + blockSize - 1) / blockSize;
+    vectorAdd<<<numBlocks, blockSize>>>(a, b, c, N);
+    cudaCheckErrors("Kernel launch failed");
+
+    // Wait for kernel to complete before accessing results on the host
+    cudaDeviceSynchronize();
+    cudaCheckErrors("Kernel execution failed");
+
+    // Prefetch results back to the CPU
+    cudaMemPrefetchAsync(c, size, cudaCpuDeviceId);
+    cudaCheckErrors("cudaMemPrefetchAsync to CPU failed");
+
+    // Print results
+    for (int i = 0; i < N; ++i) {
+        printf("%d + %d = %d\n", a[i], b[i], c[i]);
+    }
+
+    // Free unified memory
+    cudaFree(a);
+    cudaFree(b);
+    cudaFree(c);
+    cudaCheckErrors("cudaFree failed");
+
+    return 0;
+}
+
+    </code></pre>
+<pre><code>
+#include <cstdio>
+#include <cuda_runtime.h>
+
+// CUDA error checking macro
+#define cudaCheckErrors(msg) \
+    do { \
+        cudaError_t __err = cudaGetLastError(); \
+        if (__err != cudaSuccess) { \
+            fprintf(stderr, "Fatal error: %s (%s at %s:%d)\n", \
+                msg, cudaGetErrorString(__err), \
+                __FILE__, __LINE__); \
+            exit(1); \
+        } \
+    } while (0)
+
+// CUDA kernel for vector addition
+__global__ void vectorAdd(int *a, int *b, int *c, int N) {
+    int idx = threadIdx.x + blockIdx.x * blockDim.x;
+    if (idx < N) {
+        c[idx] = a[idx] + b[idx];
+    }
+}
+
+int main() {
+    int N = 100;
+    size_t size = N * sizeof(int);
+
+    // Pinned host memory allocation with mapping
+    int *h_a, *h_b, *h_c;
+    unsigned int flags = cudaHostAllocMapped;
+    cudaHostAlloc(&h_a, size, flags);  // Pinned memory on the host
+    cudaHostAlloc(&h_b, size, flags);
+    cudaHostAlloc(&h_c, size, flags);
+
+    // Initialize host arrays with values
+    for (int i = 0; i < N; ++i) {
+        h_a[i] = i;
+        h_b[i] = i * 2;
+    }
+
+    // Get device pointers to mapped host memory
+    int *d_a, *d_b, *d_c;
+    cudaHostGetDevicePointer(&d_a, h_a, 0);  // d_a points to h_a
+    cudaHostGetDevicePointer(&d_b, h_b, 0);  // d_b points to h_b
+    cudaHostGetDevicePointer(&d_c, h_c, 0);  // d_c points to h_c
+
+    // Launch kernel for vector addition
+    int blockSize = 256;
+    int numBlocks = (N + blockSize - 1) / blockSize;
+    vectorAdd<<<numBlocks, blockSize>>>(d_a, d_b, d_c, N);
+    cudaCheckErrors("Kernel launch failed");
+
+    // Wait for kernel to complete before accessing results on the host
+    cudaDeviceSynchronize();
+    cudaCheckErrors("Kernel execution failed");
+
+    // Since the host memory is mapped to the device, no need for cudaMemcpy
+
+    // Print results
+    for (int i = 0; i < N; ++i) {
+        printf("%d + %d = %d\n", h_a[i], h_b[i], h_c[i]);
+    }
+
+    // Free pinned host memory (automatically mapped to the device)
+    cudaFreeHost(h_a);
+    cudaFreeHost(h_b);
+    cudaFreeHost(h_c);
+
+    return 0;
+}
+</code></pre>
+<pre><code>
+#include <cstdio>
+#include <cuda_runtime.h>
+
+// CUDA error checking macro
+#define cudaCheckErrors(msg) \
+    do { \
+        cudaError_t __err = cudaGetLastError(); \
+        if (__err != cudaSuccess) { \
+            fprintf(stderr, "Fatal error: %s (%s at %s:%d)\n", \
+                msg, cudaGetErrorString(__err), \
+                __FILE__, __LINE__); \
+            exit(1); \
+        } \
+    } while (0)
+
+// CUDA kernel for vector addition
+__global__ void vectorAdd(int *a, int *b, int *c, int N) {
+    int idx = threadIdx.x + blockIdx.x * blockDim.x;
+    if (idx < N) {
+        c[idx] = a[idx] + b[idx];
+    }
+}
+
+int main() {
+    int N = 100;
+    size_t size = N * sizeof(int);
+
+    // Pinned host memory allocation
+    int *h_a, *h_b, *h_c;
+    cudaMallocHost(&h_a, size);  // Pinned memory on the host
+    cudaMallocHost(&h_b, size);
+    cudaMallocHost(&h_c, size);
+
+    // Initialize host arrays with values
+    for (int i = 0; i < N; ++i) {
+        h_a[i] = i;
+        h_b[i] = i * 2;
+    }
+
+    // Allocate device memory
+    int *d_a, *d_b, *d_c;
+    cudaMalloc(&d_a, size);  // Allocate memory on the GPU
+    cudaMalloc(&d_b, size);
+    cudaMalloc(&d_c, size);
+
+    // Copy data from host to device
+    cudaMemcpy(d_a, h_a, size, cudaMemcpyHostToDevice);
+    cudaMemcpy(d_b, h_b, size, cudaMemcpyHostToDevice);
+    cudaCheckErrors("cudaMemcpy to device failed");
+
+    // Launch kernel for vector addition
+    int blockSize = 256;
+    int numBlocks = (N + blockSize - 1) / blockSize;
+    vectorAdd<<<numBlocks, blockSize>>>(d_a, d_b, d_c, N);
+    cudaCheckErrors("Kernel launch failed");
+
+    // Wait for kernel to complete before accessing results on the host
+    cudaDeviceSynchronize();
+    cudaCheckErrors("Kernel execution failed");
+
+    // Copy result back from device to host
+    cudaMemcpy(h_c, d_c, size, cudaMemcpyDeviceToHost);
+    cudaCheckErrors("cudaMemcpy to host failed");
+
+    // Print results
+    for (int i = 0; i < N; ++i) {
+        printf("%d + %d = %d\n", h_a[i], h_b[i], h_c[i]);
+    }
+
+    // Free device memory
+    cudaFree(d_a);
+    cudaFree(d_b);
+    cudaFree(d_c);
+    cudaCheckErrors("cudaFree failed");
+
+    // Free pinned host memory
+    cudaFreeHost(h_a);
+    cudaFreeHost(h_b);
+    cudaFreeHost(h_c);
+
+    return 0;
+}
+
+</code></pre>
+</body>
+</html>
