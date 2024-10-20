@@ -12,89 +12,99 @@
         line-height: 1.6;
         margin: 0;
         padding: 0;
-        color: #333;
-        display: flex; /* Main container to hold sidebar and content */
+        color: white;
+        display: grid;
+        grid-template-columns: repeat(3, 1fr); /* 3 columns */
+        grid-template-rows: repeat(2, 1fr); /* 2 rows */
         height: 100vh; /* Full height of the viewport */
-        overflow: hidden; /* Prevents body scroll */
+        gap: 10px; /* Space between grid items */
+        padding: 10px;
       }
 
-      /* Sidebar styling */
-      .sidebar {
-        min-width: 200px;
-        max-width: 400px;
-        width: 300px; /* Default sidebar width */
-        padding: 20px;
-        background-color: #f8f9fa;
-        border-right: 1px solid #ddd;
-        overflow-y: auto; /* Allows scrolling within the sidebar */
-        resize: horizontal; /* Allows resizing of the sidebar */
+      /* Section styling for individual topics */
+      .topic-section {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 5px;
+        text-align: center;
+        font-size: 1.5em;
+        text-transform: uppercase;
       }
 
-      /* Content area styling */
-      .content {
-        flex: 1; /* Makes the content take up the remaining space */
-        padding: 20px;
-        overflow-y: auto;
+      /* Background colors for different sections */
+      .git-section {
+        background-color: #ff7f50;
       }
 
-      /* Headings styling */
-      h1,
-      h2,
-      h3 {
-        color: #0056b3;
+      .cuda-section {
+        background-color: #4682b4;
       }
 
-      h2 {
-        border-bottom: 2px solid #0056b3;
-        padding-bottom: 5px;
-        margin-top: 20px;
+      .deep-learning-section {
+        background-color: #32cd32;
       }
 
-      /* List styling */
-      ul {
-        list-style-type: none;
-        padding-left: 0; /* Remove default padding */
+      .algorithms-section {
+        background-color: #ff6347;
       }
 
-      li {
-        margin-bottom: 10px; /* Space between list items */
+      .django-vue-section {
+        background-color: #9370db;
+      }
+
+      .tool-section {
+        background-color: #ffa500;
       }
 
       /* Link styling */
       a {
-        color: #0056b3; /* Link color */
-        text-decoration: none; /* Remove underline from links */
-        cursor: pointer; /* Pointer cursor for links */
+        color: white;
+        text-decoration: none;
+        cursor: pointer;
+        display: block;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
       }
 
       a:hover {
         text-decoration: underline; /* Underline links on hover */
       }
-
-      /* Back link styling */
-      .back-link {
-        display: block;
-        margin-top: 20px; /* Space above the back link */
-      }
     </style>
   </head>
 
   <body>
-    <div class="sidebar">
-      <h2>Learning Notes</h2>
-      <ul class="index-list">
-        <li><a href="git/git.html">Git</a></li>
-        <li><a href="cuda/cuda.html">CUDA</a></li>
-        <li><a href="deep_learning/deep_learning.html">Deep Learning</a></li>
-        <li><a href="algorithms/algorithms.html">Algorithms</a></li>
-        <li><a href="html/djangovue.html">Django_Vue Deploy</a></li>
-        <li><a href="tool/tool.html">Tool</a></li>
-      </ul>
+    <!-- Git Section -->
+    <div class="topic-section git-section">
+      <a href="git.html">Git</a>
     </div>
 
-    <div class="content">
-      <h3>Welcome to the Learning Outline!</h3>
-      <p>Select a topic from the sidebar to explore more.</p>
+    <!-- CUDA Section -->
+    <div class="topic-section cuda-section">
+      <a href="cuda.html">CUDA</a>
+    </div>
+
+    <!-- Deep Learning Section -->
+    <div class="topic-section deep-learning-section">
+      <a href="deeplearning.html">Deep Learning</a>
+    </div>
+
+    <!-- Algorithms Section -->
+    <div class="topic-section algorithms-section">
+      <a href=""></a>
+    </div>
+
+    <!-- Django Vue Section -->
+    <div class="topic-section django-vue-section">
+      <a href="djangovue.html">Django_Vue Deploy</a>
+    </div>
+
+    <!-- Tool Section -->
+    <div class="topic-section tool-section">
+      <a href="tool/tool.html">Tool</a>
     </div>
   </body>
 </html>

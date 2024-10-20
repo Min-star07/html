@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CUDA Learning Outline</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        line-height: 1.6;
+        margin: 20px;
+        color: #333;
+      }
+      h1,
+      h2,
+      h3 {
+        color: #0056b3;
+      }
+      h2 {
+        border-bottom: 2px solid #0056b3;
+        padding-bottom: 5px;
+      }
+      ul {
+        list-style-type: none;
+        padding-left: 0;
+      }
+      li {
+        margin-bottom: 10px;
+      }
+      a {
+        color: #0056b3;
+        text-decoration: none;
+      }
+      a:hover {
+        text-decoration: underline;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Learning CUDA</h1>
+
+      <h2>1. CUDA Programming Model</h2>
+      <div class="container">
+        <img src="./img/cuda/id.jpg" alt="GPU vs CPU" />
+        <p>Figure 1: The methods of calculating id</p>
+      </div>
+
+      <h3>You should know the following concepts:</h3>
+      <ol>
+        <li>
+          <strong>GridIdx</strong>: The unique index of a grid that identifies
+          which grid is currently executing. It is calculated as:
+          <code>gridIdx.x + gridDim.x * gridIdx.y</code> (for 2D grids).
+        </li>
+        <li>
+          <strong>GridDim</strong>: Represents the total number of blocks in the
+          grid. It can be accessed via <code>gridDim.x</code> and
+          <code>gridDim.y</code>.
+        </li>
+        <li>
+          <strong>blockIdx</strong>: The unique index of the block within the
+          grid, used to identify which block is executing.
+        </li>
+        <li>
+          <strong>blockDim</strong>: The dimensions of each block, providing the
+          number of threads in each block. Accessed via
+          <code>blockDim.x</code> and <code>blockDim.y</code>.
+        </li>
+        <li>
+          <strong>ThreadIdx</strong>: The unique index of the thread within its
+          block. It is used to identify which thread is executing within the
+          block.
+        </li>
+      </ol>
+      <h2>Memory Management</h2>
+      <h2>Performance Analysis</h2>
+      <h2>CUDA CODE</h2>
+    </div>
+    <div class="container">
+      <a href="index.html" class="back-link">Back to Index</a>
+    </div>
+  </body>
+</html>

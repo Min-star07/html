@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Django and VUE3</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 20px;
+        line-height: 1.6;
+        max-width: 800px;
+        background-color: #f8f9fa; /* Light background for readability */
+        color: #333; /* Darker text color */
+      }
+      h1 {
+        color: #007bff; /* Primary color for headings */
+      }
+      h2 {
+        border-bottom: 2px solid #007bff;
+        color: #007bff;
+        padding-bottom: 5px;
+        margin-top: 20px;
+      }
+      p {
+        margin: 15px 0;
+      }
+      pre {
+        background-color: #f4f4f4;
+        padding: 10px;
+        border-radius: 5px;
+        overflow-x: auto;
+      }
+      code {
+        font-family: Consolas, "Courier New", monospace;
+        background-color: #f4f4f4;
+        padding: 2px 4px;
+        border-radius: 3px;
+      }
+      blockquote {
+        border-left: 5px solid #ccc;
+        padding-left: 10px;
+        margin: 20px 0;
+        color: #555;
+        font-style: italic;
+      }
+      .note {
+        background-color: #e7f3fe;
+        border-left: 5px solid #2196f3;
+        padding: 10px;
+        margin: 20px 0;
+      }
+      .back-link {
+        margin-top: 30px;
+        text-align: center;
+        display: block;
+        color: #007bff; /* Link color */
+        text-decoration: none;
+      }
+      .back-link:hover {
+        text-decoration: underline;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Django and Vue3</h1>
+
+      <h2>1. Create Environment</h2>
+
+      <li><code>sudo apt-get update</code></li>
+      <li>
+        <code>sudo apt-get install python3-venv&gt;</code>
+      </li>
+      <li>
+        <code>mkdir env</code>
+      </li>
+      <li>
+        <code>python3 -m venv ./env/env_name</code>
+      </li>
+      <li>
+        <code>source ./env/env_name/bin/activate</code>
+      </li>
+
+      <h2>2. Django operation</h2>
+
+      <li><code>pip install django djangorestframework</code></li>
+      <li><code>django-admin startproject backend</code></li>
+      <li><code>python manage.py startapp appname</code></li>
+      <li><code>pip install mysqlclient</code></li>
+      <li><code>python manage.py makemigrations</code></li>
+      <li><code>python manage.py migrate</code></li>
+      <p>You need also some third party plugin</p>
+      <li><code>pip install mysqlclient</code></li>
+      <li><code>pip install --upgrade PyJWT</code></li>
+      <li><code>pip install django-shortuuidfield</code></li>
+      <p>modify setting.py</p>
+      <pre><code>
+DATABASES = {
+"default": {
+    "ENGINE": "django.db.backends.mysql",
+    "NAME": "xxx",
+    "USER": "xxx",
+    "PASSWORD": "xxxxxxx",
+    "HOST": "localhost",
+    "PORT": 3306,
+}
+}
+
+MIDDLEWARE = [
+    ...,
+    "corsheaders.middleware.CorsMiddleware",
+    "django.middleware.common.CommonMiddleware",
+    ...,
+]
+
+CORS_ALLOW_ALL_ORIGINS = True
+      </code></pre>
+      <p>URL setting</p>
+      <pre><code>
+# project url
+from django.contrib import admin
+from django.urls import path, include
+urlpatterns = [
+    path("admin/", admin.site.urls),
+    path("auth/", include("apps.oaauth.urls")), #appname oaauth
+]</code></pre>
+      <pre> <code>
+# app url
+from django.urls import path
+from . import views
+app_name = "oaauth"
+urlpatterns = [
+    path("login", views.LoginView.as_view(), name="login"),
+    path("resetpwd", views.ResetPwdView.as_view(), name="resetpwd"),
+]</code></pre>
+      <h2>3.Vue</h2>
+      <code>
+        <li>npm create vue@version</li>
+        <li>Configure the project (need vue-router, pinia, devTools)</li>
+        <li>cd project</li>
+        <li>npm install</li>
+        <li>npm install vite-plugin-vue-setup-extend@0.4.0 --save-dev</li>
+        <li>npm install axios@1.6.8 --save</li>
+      </code>
+      <p>also need other plugin</p>
+      <pre><code> 
+"dependencies": {
+"axios": "^1.6.8",
+"echarts": "^5.5.1",
+"element-plus": "^2.7.0",
+"pinia": "^2.1.7",
+"vue": "^3.4.21",
+"vue-router": "^4.3.0"
+},
+"devDependencies": {
+"@vitejs/plugin-vue": "^5.0.4",
+"vite": "^5.2.8",
+"vite-plugin-html": "^3.2.2",
+"vite-plugin-vue-devtools": "^7.0.25",
+"vite-plugin-vue-setup-extend": "^0.4.0"
+}</code></pre>
+      <p>Router config</p>
+      <li>modify http.js and responsing xxx.js =>path : /api</li>
+      <li>modify index.js =>path : /router</li>
+      <h2>4. UWSGI and Nginx</h2>
+      <code>
+        <li>pip install uwsgi</li>
+        <pre><code> <li># hello.py
+      def application(env, start_response):
+      start_response('200 OK', [('Content-Type', 'text/html')])
+      return [b"Hello, World! This is a test for uWSGI."]</li></code></pre>
+        <li>uwsgi --http :8000 --wsgi-file hello.py</li>
+        <li>uwsgi --http :8000 --module backend.wsgi</li>
+        <li>sudo systemctl restart uwsgi</li>
+        <li>sudo uwsgi --ini uwsgi.ini</li>
+      </code>
+      <code>
+        <li>sudo apt-get install nginx</li>
+        <li>vim /etc/nginx/sites-available/backend.conf</li>
+        <li>
+          sudo ln -s /etc/nginx/sites-available/backend.conf
+          /etc/nginx/sites-enabled/
+        </li>
+        <li>sudo nginx -t</li>
+        <li>sudo systemctl start/stop/restart nginx</li>
+      </code>
+      <div class="container">
+        <a href="index.html" class="back-link">Back to Index</a>
+      </div>
+    </div>
+  </body>
+</html>

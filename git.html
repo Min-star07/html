@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Git Notes</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 20px;
+        line-height: 1.6;
+        max-width: 800px;
+        background-color: #f8f9fa; /* Light background for readability */
+        color: #333; /* Darker text color */
+      }
+      h1 {
+        color: #007bff; /* Primary color for headings */
+      }
+      h2 {
+        border-bottom: 2px solid #007bff;
+        color: #007bff;
+        padding-bottom: 5px;
+        margin-top: 20px;
+      }
+      p {
+        margin: 15px 0;
+      }
+      pre {
+        background-color: #f4f4f4;
+        padding: 10px;
+        border-radius: 5px;
+        overflow-x: auto;
+      }
+      code {
+        font-family: Consolas, "Courier New", monospace;
+        background-color: #f4f4f4;
+        padding: 2px 4px;
+        border-radius: 3px;
+      }
+      blockquote {
+        border-left: 5px solid #ccc;
+        padding-left: 10px;
+        margin: 20px 0;
+        color: #555;
+        font-style: italic;
+      }
+      .note {
+        background-color: #e7f3fe;
+        border-left: 5px solid #2196f3;
+        padding: 10px;
+        margin: 20px 0;
+      }
+      .back-link {
+        margin-top: 30px;
+        text-align: center;
+        display: block;
+        color: #007bff; /* Link color */
+        text-decoration: none;
+      }
+      .back-link:hover {
+        text-decoration: underline;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Git Notes</h1>
+
+      <h2>1. What is Git?</h2>
+      <p>
+        Git is a distributed version control system that allows multiple users
+        to collaborate on projects without conflicts.
+      </p>
+
+      <h2>2. Basic Commands and Working with Remote Repositories</h2>
+      <p>Essential commands for Git include:</p>
+      <ul>
+        <li><code>git init</code> - Initializes a new Git repository.</li>
+        <li>
+          <code>git clone &lt;repository-url&gt;</code> - Copies a remote
+          repository locally.
+        </li>
+        <li>
+          <code>git add &lt;file-name&gt;</code> - Stages changes for commit.
+        </li>
+        <li>
+          <code>git commit -m "message"</code> - Commits staged changes with a
+          message.
+        </li>
+        <li>
+          <code>git push</code> - Pushes local commits to the remote repository.
+        </li>
+      </ul>
+      <p>To connect to a GitHub repository, follow these steps:</p>
+      <ul>
+        <li><code>git init</code></li>
+        <li><code>git remote add origin &lt;repository-url&gt;</code></li>
+        <li><code>git add .</code></li>
+        <li><code>git commit -m "Initial commit"</code></li>
+        <li><code>git push -u origin master</code></li>
+      </ul>
+
+      <p>
+        This initializes a repository, sets the remote URL, stages files,
+        commits them, and pushes to GitHub.
+      </p>
+
+      <h2>3. Branching and Merging</h2>
+      <p>Branching allows parallel development. Use</p>
+      <ul>
+        <li><code>git branch &lt;branch-name&gt;</code> to create a branch,</li>
+        <li><code>git checkout &lt;branch-name&gt;</code> to switch, and</li>
+        <li><code>git merge &lt;branch-name&gt;</code> to combine branches.</li>
+      </ul>
+
+      <blockquote>
+        "Git is the most powerful tool you will use in your development career."
+      </blockquote>
+
+      <div class="container">
+        <a href="index.html" class="back-link">Back to Index</a>
+      </div>
+    </div>
+  </body>
+</html>
