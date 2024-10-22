@@ -222,8 +222,55 @@
         alt="pinned Memory"
       />
       <h2>Performance Analysis</h2>
-      <h2>CUDA CODE</h2>
+      <h3>NVIDIA Nsight Systems</h3>
+      <li>
+        <code>nsys profile --stats=true ./ex</code>#generate a analysis report
+      </li>
+      <li><code>nsys-ui</code> open ui to see the details of report</li>
+      <h3>NVIDIA Nsight Compute</h3>
+      <li><code>ncu --metrics "metric_name" ./your_cuda_application </code></li>
+      <li><code>ncu-ui</code></li>
+      <h2>Cooperative Groups</h2>
+      <img
+        style="width: 800px"
+        src="./img/cuda/cooperative_groups.png"
+        alt="pinned Memory"
+      />
+      <img
+        style="width: 800px"
+        src="./img/cuda/cooperative_group.png"
+        alt="pinned Memory"
+      />
+      <p>
+        协作组的引入简化了并行编程的复杂性，提供了更灵活和高效的线程同步与协调机制，特别适用于需要不同规模的线程组共同完成任务的场景。
+      </p>
+      <li>灵活的线程分组和同步: 协作组提供了对部分线程进行分组并同步的能力</li>
+      <li>
+        简化的线程间通信：允许在更小范围内控制同步操作，比如部分线程同步，或者跨越不同线程块的同步操作。
+      </li>
+      <li>
+        跨线程块同步 (Grid-Wide Synchronization) :
+        通常CUDA只能在一个线程块内部同步,
+        多个线程块之间的同步需要借助CPU,让网格中的所有线程进行同步,提升了并行计算任务的灵活性。
+      </li>
+      <li>简化的代码编写</li>
+      <li>性能优化</li>
+      <h3>协作组的常见操作</h3>
+      <li>
+        <code>cooperative_groups::this_thread_block()</code
+        >#返回当前线程块的协作组
+      </li>
+      <li>
+        <code>cooperative_groups::thread_group::split()</code
+        >#将线程块进一步划分为多个线程子组
+      </li>
+      <li><code>group.sync()</code>#对协作组内的线程进行同步</li>
+      <li>
+        <code>cooperative_groups::grid_group</code
+        >#用于管理网格范围的协作，支持跨越多个线程块的同步操作。
+      </li>
     </div>
+
     <div class="container">
       <a href="index.html" class="back-link">Back to Index</a>
     </div>
