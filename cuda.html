@@ -34,6 +34,18 @@
       a:hover {
         text-decoration: underline;
       }
+      code {
+        background-color: #f4f4f4;
+        padding: 2px 4px;
+        border-radius: 4px;
+        color: #d63384;
+      }
+      pre {
+        background-color: #f4f4f4;
+        padding: 10px;
+        border-radius: 4px;
+        overflow: auto;
+      }
     </style>
   </head>
   <body>
@@ -74,6 +86,141 @@
         </li>
       </ol>
       <h2>Memory Management</h2>
+      <h3>1. <span class="method">cudaMalloc</span></h3>
+      <p>
+        <code>cudaMalloc</code> allocates memory on the GPU (device). This is
+        the first step to store data on the device before performing
+        computations.
+      </p>
+      <pre><code>cudaError_t cudaMalloc(void **devPtr, size_t size);</code></pre>
+      <p><strong>Parameters:</strong></p>
+      <ul>
+        <li>
+          <strong>devPtr</strong>: Pointer to the allocated memory on the
+          device.
+        </li>
+        <li>
+          <strong>size</strong>: The size of the allocated memory (in bytes).
+        </li>
+      </ul>
+
+      <h3>2. <span class="method">cudaMemset</span></h3>
+      <p>
+        <code>cudaMemset</code> initializes or sets memory on the device to a
+        specific value. It is typically used to initialize device memory to zero
+        or another byte-level value.
+      </p>
+      <pre><code>cudaError_t cudaMemset(void *devPtr, int value, size_t count);</code></pre>
+      <p><strong>Parameters:</strong></p>
+      <ul>
+        <li><strong>devPtr</strong>: Pointer to the device memory.</li>
+        <li><strong>value</strong>: The value to set in memory (usually 0).</li>
+        <li><strong>count</strong>: Number of bytes to set.</li>
+      </ul>
+
+      <h3>3. <span class="method">cudaMemcpy</span></h3>
+      <p>
+        <code>cudaMemcpy</code> copies data between the host (CPU) and device
+        (GPU). It can also be used for copying data between different memory
+        regions within the GPU.
+      </p>
+      <pre><code>cudaError_t cudaMemcpy(void *dst, const void *src, size_t count, cudaMemcpyKind kind);</code></pre>
+      <p><strong>Parameters:</strong></p>
+      <ul>
+        <li><strong>dst</strong>: Destination pointer (host or device).</li>
+        <li><strong>src</strong>: Source pointer (host or device).</li>
+        <li><strong>count</strong>: Number of bytes to copy.</li>
+        <li>
+          <strong>kind</strong>: The direction of the copy:
+          <ul>
+            <li><code>cudaMemcpyHostToDevice</code></li>
+            <li><code>cudaMemcpyDeviceToHost</code></li>
+            <li><code>cudaMemcpyDeviceToDevice</code></li>
+            <li><code>cudaMemcpyHostToHost</code></li>
+          </ul>
+        </li>
+      </ul>
+
+      <h3>4. <span class="method">cudaFree</span></h3>
+      <p>
+        <code>cudaFree</code> releases or deallocates memory previously
+        allocated on the GPU with <code>cudaMalloc</code>.
+      </p>
+      <pre><code>cudaError_t cudaFree(void *devPtr);</code></pre>
+      <p><strong>Parameters:</strong></p>
+      <ul>
+        <li>
+          <strong>devPtr</strong>: Pointer to the memory to be freed on the
+          device.
+        </li>
+      </ul>
+      <img
+        style="width: 800px"
+        src="./img/cuda/vector_add.png"
+        alt="Vector add"
+      />
+      <h3>5. <span class="method">cudaMallocManaged</span></h3>
+      <p>
+        <code>cudaMallocManaged</code> allocates <em>unified memory</em> that
+        can be accessed by both the host and device without explicit copying.
+        This simplifies memory management, as data can be transparently
+        transferred between CPU and GPU.
+      </p>
+      <pre><code>cudaError_t cudaMallocManaged(void **devPtr, size_t size);</code></pre>
+      <p><strong>Parameters:</strong></p>
+      <ul>
+        <li>
+          <strong>devPtr</strong>: Pointer to the allocated unified memory.
+        </li>
+        <li><strong>size</strong>: The size of the allocated memory.</li>
+      </ul>
+
+      <h3>6. <span class="method">cudaMemPrefetchAsync</span></h3>
+      <p>
+        <code>cudaMemPrefetchAsync</code> prefetches memory to a specified
+        device asynchronously. It's used for managing the placement of managed
+        memory, ensuring that the data is available on the desired device (CPU
+        or GPU).
+      </p>
+      <pre><code>cudaError_t cudaMemPrefetchAsync(void *devPtr, size_t count, int device, cudaStream_t stream);</code></pre>
+      <p><strong>Parameters:</strong></p>
+      <ul>
+        <li><strong>devPtr</strong>: Pointer to the managed memory.</li>
+        <li><strong>count</strong>: Number of bytes to prefetch.</li>
+        <li>
+          <strong>device</strong>: The device to prefetch to (0 for host, device
+          ID for GPU).
+        </li>
+        <li>
+          <strong>stream</strong>: The CUDA stream for asynchronous execution
+          (can be 0 for default stream).
+        </li>
+      </ul>
+      <img
+        style="width: 800px"
+        src="./img/cuda/unified_memory.png"
+        alt="Unified Memory"
+      />
+      <h3>7. <span class="method">cudaDeviceSynchronize</span></h3>
+      <p>
+        <code>cudaDeviceSynchronize</code> waits for the device to complete all
+        preceding tasks. This is commonly used after launching kernels or memory
+        operations to ensure that the device is idle before proceeding.
+      </p>
+      <pre><code>cudaError_t cudaDeviceSynchronize(void);</code></pre>
+
+      <h3>8.<span class="method">cudaHostAlloc</span></h3>
+      <p>
+        <code
+          >cudaHostAlloc ( void** pHost, size_t size, unsigned int flags )</code
+        >
+        Allocates page-locked memory on the host.
+      </p>
+      <img
+        style="width: 800px"
+        src="./img/cuda/pinned_memory.png"
+        alt="pinned Memory"
+      />
       <h2>Performance Analysis</h2>
       <h2>CUDA CODE</h2>
     </div>

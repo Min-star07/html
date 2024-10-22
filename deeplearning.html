@@ -7,31 +7,57 @@
     <style>
       body {
         font-family: Arial, sans-serif;
-        line-height: 1.6;
         margin: 20px;
-        color: #333;
+        line-height: 1.6;
+        max-width: 100%;
+        background-color: #f8f9fa; /* Light background for readability */
+        color: #333; /* Darker text color */
       }
-      h1,
-      h2,
-      h3 {
-        color: #0056b3;
+      h1 {
+        color: #007bff; /* Primary color for headings */
       }
       h2 {
-        border-bottom: 2px solid #0056b3;
+        border-bottom: 2px solid #007bff;
+        color: #007bff;
         padding-bottom: 5px;
+        margin-top: 20px;
       }
-      ul {
-        list-style-type: none;
-        padding-left: 0;
+      p {
+        margin: 15px 0;
       }
-      li {
-        margin-bottom: 10px;
+      pre {
+        background-color: #f4f4f4;
+        padding: 10px;
+        border-radius: 5px;
+        overflow-x: auto;
       }
-      a {
-        color: #0056b3;
+      code {
+        font-family: Consolas, "Courier New", monospace;
+        background-color: #f4f4f4;
+        padding: 2px 4px;
+        border-radius: 4px;
+      }
+      blockquote {
+        border-left: 5px solid #ccc;
+        padding-left: 10px;
+        margin: 20px 0;
+        color: #555;
+        font-style: italic;
+      }
+      .note {
+        background-color: #e7f3fe;
+        border-left: 5px solid #2196f3;
+        padding: 10px;
+        margin: 20px 0;
+      }
+      .back-link {
+        margin-top: 30px;
+        text-align: center;
+        display: block;
+        color: #007bff; /* Link color */
         text-decoration: none;
       }
-      a:hover {
+      .back-link:hover {
         text-decoration: underline;
       }
     </style>
@@ -39,8 +65,76 @@
   <body>
     <div class="container">
       <h1>Learning Deep Learning</h1>
-      <h2>Read img, txt</h2>
-      <h2>Torch</h2>
+      <h2>Load img</h2>
+      <li><code>import numpy as np</code></li>
+      <li><code>import imageio</code> #height * width * channel</li>
+      <li><code>import matplotlib.pyplot as plt</code></li>
+      <li><code>img_path = "xxxx"</code></li>
+      <li><code>img = imageio.imread(img_path)</code></li>
+      <li><code> plt.imshow(img)</code></li>
+      <p>
+        To see the performance of figure: (you should know hot to get thevalue
+        and how to calculate the value)
+      </p>
+      <li><code>img.shape</code></li>
+      <li><code>img.min()</code></li>
+      <li><code>img.max()</code></li>
+      <li>
+        <code>img.mean(0)</code> # 0 : represent meanvalue of axis =0 (height),
+        1:axis =1(height); 2:axis=2(channel)
+      </li>
+      <li>
+        <code>img[:,:,0]</code> # 0 : represent value of red, 1: green, 2:blue
+      </li>
+      <p>transform numpy to torch with img</p>
+      <li><code>img_tensor = torch.from_numpy(img)</code></li>
+      <li><code>img_tensor.shape, img_tensor.min()</code></li>
+      <li>
+        <code>img_tensor = img_tensor.permute(2, 1, 0)</code>change h*w*c into
+        c*h*w
+      </li>
+      <li><code>img_tensor.shape</code></li>
+      <li>
+        <code>img_unsqueeze = img_tensor.unsqueeze(0)</code>add one dimension in
+        the data to meet requirement of pytorch
+      </li>
+      <li><code>img_unsqueeze.shape</code></li>
+      <h2>Load text</h2>
+      <li><code>import numpy as np</code></li>
+      <li><code>import torch</code></li>
+      <li>
+        <code
+          >data_list = np.loadtxt(txt_path, dtype=np.float32, delimiter=";",
+          skiprows=1)</code
+        >
+      </li>
+      <li><code>data_tensor = torch.from_numpy(data_list)</code></li>
+      <li><coed>data_tensor.shape, data_tensor.dtype</coed></li>
+      <p>In the classifiction problem, you should know one hot</p>
+      <li>
+        <code>target = torch.tensor([0, 2, 1, 9, 5])</code> # Assuming target
+        contains class indices (e.g., [0, 2, 1, 9, 5])
+      </li>
+      <li>
+        <code>target_onehot_test = torch.zeros(target.shape[0], 10)</code> #
+        Initialize a tensor of zeros with shape [number_of_samples,
+        number_of_classes]
+      </li>
+      <li>
+        <code>target_onehot_test.scatter_(1, target.unsqueeze(1), 1.0)</code>#
+        Use scatter_ to set the appropriate index to 1 for each class label
+      </li>
+      <p>You also should know the concept</p>
+      <li><code>data_tensor.stride()</code></li>
+      <img src="./img/deep_learning/439.png" alt="Stride test" />
+      <li><code>data_tensor.view()</code></li>
+      <img src="./img/deep_learning/440.png" alt="View test" />
+      <li><code>data_transpose()</code></li>
+      <li>
+        <code>torch.cat((a, one-hot), dim=1)</code> #0: row increase, 1:column
+        increase
+      </li>
+      <img src="./img/deep_learning/441.png" alt="Cat test" />
       <h2>Basic knowledge of deep learning</h2>
     </div>
     <div class="container">
